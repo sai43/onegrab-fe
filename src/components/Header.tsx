@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, UserCircle2 } from 'lucide-react';
-import { Button } from './ui/button';
-import SignupForm from './SignupForm';
 import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import { Button } from './ui/button';
+
+interface User {
+  username: string;
+  token: string;
+}
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSignupOpen, setIsSignupOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +25,12 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Load user from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('onegrab_user');
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
   const navItems = [
     { name: 'Home', href: '#' },
     { name: 'Categories', href: '#categories' },
@@ -29,21 +39,44 @@ const Header = () => {
     { name: 'Contact Us', href: '#contact' },
   ];
 
-  const handleSignupSuccess = (username) => {
-    setUsername(username);
-    setIsLoggedIn(true);
+  const handleLoginSuccess = (username: string, token: string) => {
+    const userData = { username, token };
+    setUser(userData);
+    localStorage.setItem('onegrab_user', JSON.stringify(userData));
   };
 
-  const handleLoginSuccess = (username) => {
-    setUsername(username);
-    setIsLoggedIn(true);
+  const handleSignupSuccess = (username: string, token: string) => {
+    const userData = { username, token };
+    setUser(userData);
+    localStorage.setItem('onegrab_user', JSON.stringify(userData));
+  };
+
+  const handleLogout = async () => {
+    if (!user?.token) return;
+
+    const myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${user.token}`);
+
+    try {
+      await fetch('http://localhost:4343/api/v1/users/sign_out', {
+        method: 'DELETE',
+        headers: myHeaders,
+      });
+    } catch {
+      // optionally handle error here
+    }
+
+    setUser(null);
+    localStorage.removeItem('onegrab_user');
   };
 
   return (
     <>
-      <header className={`bg-white w-[95%] mx-[3%] rounded-[10px] border-2 border-black fixed top-5 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-lg py-3' : 'bg-transparent py-4'
-      }`}>
+      <header
+        className={`bg-white w-[95%] mx-[3%] rounded-[10px] border-2 border-black fixed top-5 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-lg py-3' : 'bg-transparent py-4'
+        }`}
+      >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -66,28 +99,34 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop Auth Buttons */}
+            {/* Desktop Auth Buttons or Profile */}
             <div className="hidden md:flex items-center space-x-4">
-              {!isLoggedIn ? (
+              {!user ? (
                 <>
                   <Button
-                    onClick={() => setIsLoginOpen(true)}
                     variant="ghost"
                     className="text-text-gray hover:text-text-black"
+                    onClick={() => setShowLogin(true)}
                   >
                     Login
                   </Button>
                   <Button
-                    onClick={() => setIsSignupOpen(true)}
                     className="bg-accent text-text-black hover:bg-accent-yellow transition-colors duration-200"
+                    onClick={() => setShowSignup(true)}
                   >
                     Sign Up
                   </Button>
                 </>
               ) : (
-                <div className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center space-x-4">
                   <UserCircle2 className="w-8 h-8 text-text-black" />
-                  <span className="font-semibold">{username}</span>
+                  <span className="font-semibold">{user.username}</span>
+                  <button
+                    onClick={handleLogout}
+                    className="text-red-600 hover:text-red-800 font-semibold"
+                  >
+                    Logout
+                  </button>
                 </div>
               )}
             </div>
@@ -120,26 +159,38 @@ const Header = () => {
                   </a>
                 ))}
                 <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                  {!isLoggedIn ? (
+                  {!user ? (
                     <>
                       <Button
-                        onClick={() => setIsLoginOpen(true)}
                         variant="ghost"
                         className="text-text-gray hover:text-text-black"
+                        onClick={() => {
+                          setShowLogin(true);
+                          setIsMobileMenuOpen(false);
+                        }}
                       >
                         Login
                       </Button>
                       <Button
-                        onClick={() => setIsSignupOpen(true)}
                         className="bg-accent text-text-black hover:bg-accent-yellow transition-colors duration-200"
+                        onClick={() => {
+                          setShowSignup(true);
+                          setIsMobileMenuOpen(false);
+                        }}
                       >
                         Sign Up
                       </Button>
                     </>
                   ) : (
-                    <div className="flex items-center space-x-2 cursor-pointer">
+                    <div className="flex items-center space-x-4">
                       <UserCircle2 className="w-8 h-8 text-text-black" />
-                      <span className="font-semibold">{username}</span>
+                      <span className="font-semibold">{user.username}</span>
+                      <button
+                        onClick={handleLogout}
+                        className="text-red-600 hover:text-red-800 font-semibold"
+                      >
+                        Logout
+                      </button>
                     </div>
                   )}
                 </div>
@@ -149,19 +200,17 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Signup Modal */}
-      {isSignupOpen && (
-        <SignupForm
-          onClose={() => setIsSignupOpen(false)}
-          onSignupSuccess={handleSignupSuccess}
+      {/* Modals */}
+      {showLogin && (
+        <LoginForm
+          onLoginSuccess={handleLoginSuccess}
+          onClose={() => setShowLogin(false)}
         />
       )}
-
-      {/* Login Modal */}
-      {isLoginOpen && (
-        <LoginForm
-          onClose={() => setIsLoginOpen(false)}
-          onLoginSuccess={handleLoginSuccess}
+      {showSignup && (
+        <SignupForm
+          onSignupSuccess={handleSignupSuccess}
+          onClose={() => setShowSignup(false)}
         />
       )}
     </>
