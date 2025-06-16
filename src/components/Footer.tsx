@@ -1,5 +1,6 @@
 
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import NewsletterSection from './NewsletterSection';
 
 const Footer = () => {
   const companyLinks = [
@@ -42,6 +43,7 @@ const Footer = () => {
   ];
 
   return (
+    <><NewsletterSection />
     <footer id="contact" className="bg-text-black text-white">
       <div className="container mx-auto px-4 py-16">
         {/* Main footer content */}
@@ -52,10 +54,10 @@ const Footer = () => {
               ONEGRAB
             </h3>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Empowering learners worldwide with high-quality online education. 
+              Empowering learners worldwide with high-quality online education.
               Join thousands of students who are advancing their careers with OneGrab.
             </p>
-            
+
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-300">
                 <Mail className="w-5 h-5 text-primary" />
@@ -166,7 +168,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </footer></>
   );
 };
 
