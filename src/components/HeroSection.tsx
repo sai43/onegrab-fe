@@ -1,32 +1,36 @@
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
+import styles from './HeroSection.module.css';
 
 const floatingImages = [
   {
     src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustrations-1-J5X9FKA.png',
     alt: 'Learning illustration 1',
-    positionClasses: 'absolute top-24 left-8 md:left-16 w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 opacity-90',
+    // larger size and adjusted position
+    positionClasses: 'absolute top-20 left-8 md:left-16 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-90',
     animationDelay: '0.2s',
   },
   {
     src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustration-2-J5X9FKA.png',
     alt: 'Learning illustration 2',
-    positionClasses: 'absolute top-32 right-8 md:right-20 w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28 opacity-80',
+    // larger size and adjusted position
+    positionClasses: 'absolute top-32 right-10 md:right-24 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-80',
     animationDelay: '0.4s',
   },
   {
     src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustration-3-J5X9FKA.png',
     alt: 'Learning illustration 3',
-    positionClasses: 'absolute bottom-40 left-12 md:left-24 w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 opacity-85',
+    positionClasses: 'absolute bottom-36 left-12 md:left-28 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-85',
     animationDelay: '0.6s',
   },
   {
     src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustration-4-J5X9FKA.png',
     alt: 'Learning illustration 4',
-    positionClasses: 'absolute bottom-24 right-8 md:right-16 w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 opacity-90',
+    positionClasses: 'absolute bottom-24 right-10 md:right-20 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-90',
     animationDelay: '0.8s',
   },
 ];
+
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -37,43 +41,46 @@ const HeroSection = () => {
 
   return (
     <section
-      className="min-h-screen relative flex items-center justify-center pt-16 overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(135deg, rgba(225, 202, 255, 0.85) 0%, rgba(193, 154, 255, 0.75) 100%), url('https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/BG_30-1-WMR6JB.jpg')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-      }}
+      className={`${styles.heroBg} min-h-screen relative flex pt-20 items-center justify-center overflow-hidden`}
     >
       {/* Floating Illustrations */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none z-10 top-20">
         {floatingImages.map(({ src, alt, positionClasses, animationDelay }, index) => (
           <img
             key={index}
             src={src}
             alt={alt}
             className={`${positionClasses} transition-all duration-1000 ${
-              isVisible ? 'translate-y-0 opacity-full' : 'translate-y-10 opacity-0'
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
             style={{ animationDelay }}
+            loading="lazy"
+            decoding="async"
           />
         ))}
       </div>
 
-      <div className="container mx-auto px-4 text-center relative z-10 max-w-4xl">
+
+      <div className="container mx-auto px-4 text-center relative z-20 max-w-4xl">
         <div
           className={`transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-anton text-text-black mb-8 leading-tight tracking-extra-wide uppercase">
-            LEARN NEW SKILLS FROM
-            <br />
-            <span className="text-text-black">ANYWHERE, ANYTIME</span>
-            <br />
-            EASILY
-          </h1>
+          {/* Banner aligned to L character */}
+          <div className="relative inline-block mb-8" style={{ lineHeight: 1 }}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-anton text-text-black leading-tight tracking-extra-wide uppercase">
+              LEARN NEW SKILLS FROM
+              <br />
+              <span className="text-text-black">ANYWHERE, ANYTIME EASILY</span>
+            </h1>
+            <div
+              className="absolute top-[0] left-0 -rotate-12 bg-[#BBF0F4] px-4 py-1 rounded-sm shadow-md text-sm font-semibold text-black select-none"
+              style={{ fontFamily: "'Poppins', sans-serif", transformOrigin: 'left center' }}
+            >
+              OneGrab Online
+            </div>
+          </div>
 
           <p className="text-lg md:text-xl lg:text-2xl text-text-gray mb-10 max-w-3xl mx-auto font-medium">
             Join thousands of learners who are advancing their careers with our comprehensive online courses
@@ -87,25 +94,38 @@ const HeroSection = () => {
               Start Learning Today
             </Button>
 
+
             <div className="flex items-center space-x-3">
               <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
+                {[
+                  "https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/pleased-cheerful-redhaired-male-with-pleasant-smil-CCXAYZL.jpg",
+                  "https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/horizontal-portrait-of-beautiful-cheerful-young-fe-DG8NQ8H.jpg",
+                  "https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/horizontal-shot-of-pleased-student-with-freckled-s-WRQ6HDA.jpg",
+                ].map((src, i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 rounded-full bg-white border-3 border-primary shadow-md flex items-center justify-center"
+                    className="w-12 h-12 rounded-full bg-white border-3 border-primary shadow-md overflow-hidden"
                   >
-                    <span className="text-sm font-bold text-primary">U{i}</span>
+                    <img
+                      src={src}
+                      alt={`User ${i}`}
+                      className="object-cover w-full h-full"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 ))}
               </div>
               <span className="text-base text-text-gray font-medium">+1,000 students</span>
             </div>
+
+
           </div>
         </div>
       </div>
 
       {/* Floating dots animation */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none z-10">
         <div
           className="absolute top-1/4 left-1/4 w-3 h-3 bg-accent rounded-full animate-bounce opacity-60"
           style={{ animationDelay: '1s' }}

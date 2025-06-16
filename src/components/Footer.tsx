@@ -65,11 +65,11 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <Phone className="w-5 h-5 text-primary" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 8919669515</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>123 Learning St, Education City</span>
+                <span>Shop #7, APNGO Home, Near District Court, Parvathipuram, AP-535501.</span>
               </div>
             </div>
           </div>

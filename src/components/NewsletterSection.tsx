@@ -33,7 +33,7 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-pastel-bg">
+    <section ref={sectionRef} className="py-20 custom-light-blue">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left side - Content */}
