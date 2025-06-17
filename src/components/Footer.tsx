@@ -1,6 +1,13 @@
-
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
-import NewsletterSection from './Newsletter';
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+} from 'lucide-react';
+import Newsletter from './Newsletter';
 
 const Footer = () => {
   const companyLinks = [
@@ -8,167 +15,154 @@ const Footer = () => {
     { name: 'Careers', href: '#careers' },
     { name: 'Press', href: '#press' },
     { name: 'Blog', href: '#blog' },
-    { name: 'Partnerships', href: '#partnerships' }
+    { name: 'Partnerships', href: '#partnerships' },
   ];
 
   const courseLinks = [
-    { name: 'Web Development', href: '#web-dev' },
-    { name: 'Data Science', href: '#data-science' },
-    { name: 'Design', href: '#design' },
+    { name: 'Digital Marketing', href: '#digital-marketing' },
+    { name: 'Web Development', href: '#web-development' },
+    { name: 'UI/UX Design', href: '#ui-ux' },
+    { name: 'Graphic Design', href: '#graphic-design' },
     { name: 'Business', href: '#business' },
-    { name: 'Marketing', href: '#marketing' }
   ];
 
   const resourceLinks = [
-    { name: 'Help Center', href: '#help' },
-    { name: 'Course Catalog', href: '#catalog' },
-    { name: 'Student Stories', href: '#stories' },
-    { name: 'Learning Paths', href: '#paths' },
-    { name: 'Certificates', href: '#certificates' }
+    { name: 'Blog / Articles', href: '#blog-articles' },
+    { name: 'Detail Guides', href: '#detail-guides' },
+    { name: 'FAQs', href: '#faqs' },
+    { name: 'Help Center', href: '#help-center' },
+    { name: 'Certificates', href: '#certificates' },
   ];
 
   const supportLinks = [
-    { name: 'Contact Support', href: '#support' },
-    { name: 'Privacy Policy', href: '#privacy' },
+    { name: 'Contact Support', href: '#contact-support' },
+    { name: 'Privacy Policy', href: '#privacy-policy' },
     { name: 'Terms of Service', href: '#terms' },
-    { name: 'Refund Policy', href: '#refund' },
-    { name: 'Accessibility', href: '#accessibility' }
+    { name: 'Refund Policy', href: '#refund-policy' },
+    { name: 'Accessibility', href: '#accessibility' },
   ];
 
   const socialLinks = [
     { icon: <Facebook className="w-5 h-5" />, href: '#facebook', name: 'Facebook' },
     { icon: <Twitter className="w-5 h-5" />, href: '#twitter', name: 'Twitter' },
     { icon: <Instagram className="w-5 h-5" />, href: '#instagram', name: 'Instagram' },
-    { icon: <Linkedin className="w-5 h-5" />, href: '#linkedin', name: 'LinkedIn' }
+    { icon: <Linkedin className="w-5 h-5" />, href: '#linkedin', name: 'LinkedIn' },
   ];
 
   return (
-    <><NewsletterSection />
-    <footer id="contact" className="bg-text-black text-white">
-      <div className="container mx-auto px-4 py-16">
-        {/* Main footer content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
-          {/* Brand section */}
-          <div className="lg:col-span-2">
-            <h3 className="text-3xl font-anton font-bold mb-4 tracking-extra-wide">
-              ONEGRAB
-            </h3>
-            <p className="text-gray-300 mb-6 leading-relaxed">
-              Empowering learners worldwide with high-quality online education.
-              Join thousands of students who are advancing their careers with OneGrab.
-            </p>
+    <footer className="bg-[#121212] text-white pt-16 pb-10">
+      <Newsletter />
 
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Mail className="w-5 h-5 text-primary" />
-                <span>hello@onegrab.com</span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Phone className="w-5 h-5 text-primary" />
-                <span>+91 8919669515</span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300">
-                <MapPin className="w-5 h-5 text-primary" />
-                <span>#7, AP-NGO Home,Main Road, <br/> Parvathipuram, AP-535501.</span>
-              </div>
+      <div className="container mx-auto px-6 mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-6">
+        {/* Brand */}
+        <div className="col-span-1 md:col-span-2">
+          <h3 className="text-2xl font-anton font-bold tracking-wide mb-6">OneGrab</h3>
+          <p className="text-gray-400 leading-relaxed max-w-sm">
+            OneGrab is an online learning platform that makes education accessible, practical, and fun.
+          </p>
+
+          <div className="mt-6 space-y-3 text-gray-400">
+            <div className="flex items-center space-x-3">
+              <Mail className="w-5 h-5 text-yellow-400" />
+              <span>hello@onegrab.com</span>
             </div>
-          </div>
-
-          {/* Company links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-primary">Company</h4>
-            <ul className="space-y-2">
-              {companyLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-primary transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Course links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-primary">Online Courses</h4>
-            <ul className="space-y-2">
-              {courseLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-primary transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resource links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-primary">Resources</h4>
-            <ul className="space-y-2">
-              {resourceLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-primary transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-primary">Support</h4>
-            <ul className="space-y-2">
-              {supportLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-primary transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center space-x-3">
+              <Phone className="w-5 h-5 text-yellow-400" />
+              <span>(+91) 8919 6695 15</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <MapPin className="w-5 h-5 text-yellow-400" />
+              <span>#7, AP-NGO-Home, Main Road,<br/> Parvathipuram, AP-535501.</span>
+            </div>
           </div>
         </div>
 
-        {/* Social media and bottom section */}
-        <div className="border-t border-gray-700 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            {/* Social media links */}
-            <div className="flex items-center space-x-4 mb-4 md:mb-0">
-              <span className="text-gray-300 mr-2">Follow us:</span>
-              {socialLinks.map((social) => (
+        {/* Columns */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-yellow-400">Company</h4>
+          <ul className="space-y-2 text-gray-400">
+            {companyLinks.map((link) => (
+              <li key={link.name}>
                 <a
-                  key={social.name}
-                  href={social.href}
-                  className="p-2 bg-gray-800 rounded-full hover:bg-primary hover:text-text-black transition-all duration-200 transform hover:scale-110"
-                  aria-label={social.name}
+                  href={link.href}
+                  className="hover:text-yellow-400 transition-colors duration-200"
                 >
-                  {social.icon}
+                  {link.name}
                 </a>
-              ))}
-            </div>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-            {/* Copyright */}
-            <div className="text-gray-400 text-center md:text-right">
-              <p>&copy; 2024 OneGrab. All rights reserved.</p>
-            </div>
-          </div>
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-yellow-400">Online Course</h4>
+          <ul className="space-y-2 text-gray-400">
+            {courseLinks.map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="hover:text-yellow-400 transition-colors duration-200"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-yellow-400">Resources</h4>
+          <ul className="space-y-2 text-gray-400">
+            {resourceLinks.map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="hover:text-yellow-400 transition-colors duration-200"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-yellow-400">Support</h4>
+          <ul className="space-y-2 text-gray-400">
+            {supportLinks.map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="hover:text-yellow-400 transition-colors duration-200"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </footer></>
+
+      {/* Bottom */}
+      <div className="mt-16 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="text-gray-500 text-sm mb-4 md:mb-0">
+          &copy; {new Date().getFullYear()} Onegrab. All rights reserved.
+        </div>
+
+        <div className="flex space-x-4">
+          {socialLinks.map(({ icon, href, name }) => (
+            <a
+              key={name}
+              href={href}
+              aria-label={name}
+              className="bg-gray-800 p-2 rounded-full hover:bg-yellow-400 hover:text-black transition transform duration-200"
+            >
+              {icon}
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
   );
 };
 

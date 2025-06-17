@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Star, Crown } from 'lucide-react';
 import { Button } from './ui/button';
 import styles from './HeroSection.module.css';
+import Testimonials from './Testimonials';
 
 const Plans = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -88,11 +89,9 @@ const Plans = () => {
   ];
 
   return (
-    <section id="plans" ref={sectionRef}  className={`${styles.pricingBg} py-24`}>
+    <><section id="plans" ref={sectionRef} className={`${styles.pricingBg} py-24`}>
       <div className="container mx-auto px-4">
-        <div className={`text-center mb-20 transition-all duration-1000 ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-        }`}>
+        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-anton text-text-black mb-6 tracking-extra-wide">
             FLEXIBLE PLANS FOR EVERY
             <br />
@@ -107,13 +106,9 @@ const Plans = () => {
           {plans.map((plan, index) => (
             <div
               key={plan.name}
-              className={`relative ${plan.bgColor} rounded-3xl border-2 transition-all duration-700 hover:scale-105 ${
-                plan.isPopular 
-                  ? `${plan.borderColor} shadow-2xl shadow-primary/20 transform scale-105` 
-                  : `${plan.borderColor} hover:border-primary/50 shadow-xl`
-              } ${
-                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-              }`}
+              className={`relative ${plan.bgColor} rounded-3xl border-2 transition-all duration-700 hover:scale-105 ${plan.isPopular
+                  ? `${plan.borderColor} shadow-2xl shadow-primary/20 transform scale-105`
+                  : `${plan.borderColor} hover:border-primary/50 shadow-xl`} ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
               style={{ transitionDelay: `${index * 0.2}s` }}
             >
               {plan.isPopular && (
@@ -147,11 +142,9 @@ const Plans = () => {
                 </div>
 
                 <Button
-                  className={`w-full py-4 text-lg font-bold transition-all duration-300 rounded-xl ${
-                    plan.isPopular
+                  className={`w-full py-4 text-lg font-bold transition-all duration-300 rounded-xl ${plan.isPopular
                       ? 'bg-primary text-white hover:bg-primary-dark shadow-lg'
-                      : 'bg-accent text-text-black hover:bg-accent-yellow'
-                  }`}
+                      : 'bg-accent text-text-black hover:bg-accent-yellow'}`}
                 >
                   {plan.buttonText}
                 </Button>
@@ -178,7 +171,7 @@ const Plans = () => {
           </p>
         </div>
       </div>
-    </section>
+    </section><Testimonials /></>
   );
 };
 
