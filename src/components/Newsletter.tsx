@@ -77,7 +77,7 @@ const NewsletterSection = () => {
           }`}>
             <div className="relative">
               <img
-                src="https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustrations-1-J5X9FKA.png"
+                src="https://ik.imagekit.io/x5lc68m0o/onegrab/IL-1.png"
                 alt="Newsletter subscription illustration"
                 className="w-full max-w-md mx-auto"
               />

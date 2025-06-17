@@ -3,6 +3,7 @@ import { Menu, X, UserCircle2 } from 'lucide-react';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 
 interface User {
   username: string;
@@ -36,6 +37,7 @@ const Header = () => {
     { name: 'Categories', href: '#categories' },
     { name: 'Courses', href: '#courses' },
     { name: 'Plans', href: '#plans' },
+    { name: 'Blog', href: '#blog' },
     { name: 'About Us', href: '#about' },
     { name: 'Contact Us', href: '#contact' },
   ];
@@ -80,11 +82,14 @@ const Header = () => {
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
+            
+            {/* Logo */}         
             <div className="flex items-center">
-              <h1 className="text-2xl font-anton font-bold text-text-black tracking-extra-wide">
-                ONEGRAB
-              </h1>
+              <Link to="/" aria-label="Go to homepage">
+                <h1 className="text-2xl font-anton font-bold text-text-black tracking-extra-wide cursor-pointer">
+                  ONEGRAB
+                </h1>
+              </Link>
             </div>
 
             {/* Desktop Navigation */}

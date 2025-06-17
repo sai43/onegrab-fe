@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import styles from './HeroSection.module.css';
+import { Image } from '@imagekit/react';
 
 const floatingImages = [
   {
-    src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustrations-1-J5X9FKA.png',
+    src: 'IL-1.png',
     alt: 'Learning illustration 1',
     // larger size and adjusted position
     positionClasses: 'absolute top-20 left-8 md:left-16 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-90',
     animationDelay: '0.2s',
   },
   {
-    src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustration-2-J5X9FKA.png',
+    src: 'IL-2.png',
     alt: 'Learning illustration 2',
     // larger size and adjusted position
     positionClasses: 'absolute top-32 right-10 md:right-24 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-80',
     animationDelay: '0.4s',
   },
   {
-    src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustration-3-J5X9FKA.png',
+    src: 'IL-3.png',
     alt: 'Learning illustration 3',
     positionClasses: 'absolute bottom-36 left-12 md:left-28 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-85',
     animationDelay: '0.6s',
   },
   {
-    src: 'https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Illustration-4-J5X9FKA.png',
+    src: 'IL-4.png',
     alt: 'Learning illustration 4',
     positionClasses: 'absolute bottom-24 right-10 md:right-20 w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 opacity-90',
     animationDelay: '0.8s',
@@ -46,16 +47,17 @@ const HeroSection = () => {
       {/* Floating Illustrations */}
       <div className="absolute inset-0 pointer-events-none z-10 top-20">
         {floatingImages.map(({ src, alt, positionClasses, animationDelay }, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={alt}
-            className={`${positionClasses} transition-all duration-1000 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}
-            style={{ animationDelay }}
-            loading="lazy"
-            decoding="async"
+          <Image
+          urlEndpoint="https://ik.imagekit.io/x5lc68m0o/"
+          src={src}
+          width={500}
+          height={500}
+          key={index}
+          className={`${positionClasses} transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+          alt={alt}
+          style={{ animationDelay }}
+          loading="lazy"
+          decoding="async"
           />
         ))}
       </div>
@@ -97,23 +99,21 @@ const HeroSection = () => {
 
             <div className="flex items-center space-x-3">
               <div className="flex -space-x-2">
-                {[
-                  "https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/pleased-cheerful-redhaired-male-with-pleasant-smil-CCXAYZL.jpg",
-                  "https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/horizontal-portrait-of-beautiful-cheerful-young-fe-DG8NQ8H.jpg",
-                  "https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/horizontal-shot-of-pleased-student-with-freckled-s-WRQ6HDA.jpg",
-                ].map((src, i) => (
+                {["S1.jpg","S2.jpg","S3.jpg"].map((src, i) => (
                   <div
                     key={i}
                     className="w-12 h-12 rounded-full bg-white border-3 border-primary shadow-md overflow-hidden"
                   >
-                    <img
-                      src={src}
-                      alt={`User ${i}`}
-                      className="object-cover w-full h-full"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                <Image
+                  urlEndpoint="https://ik.imagekit.io/x5lc68m0o/"
+                  src={src}
+                  key={i}
+                  className="bject-cover w-full h-full"
+                  alt={`Student ${i}`}
+                  loading="lazy"
+                  decoding="async"
+                />
+                </div>
                 ))}
               </div>
               <span className="text-base text-text-gray font-medium">+1,000 students</span>

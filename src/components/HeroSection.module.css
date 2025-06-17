@@ -8,7 +8,7 @@
 
 .heroBg {
   background-color: #E1CAFF;
-  background-image: url('https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/BG_30-1-WMR6JB.jpg');
+  background-image: url('https://ik.imagekit.io/x5lc68m0o/BG_OG.jpg');
   background-blend-mode: multiply;
   min-height: 100vh;
 }
@@ -27,7 +27,7 @@
 }
 
 .pricingBg {
-  background-image: url('https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/BG_30-1-WMR6JB.jpg');
+  background-image: url('https://ik.imagekit.io/x5lc68m0o/BG_OG.jpg');
 }
 
 .pricingBg::before {

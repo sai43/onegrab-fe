@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FAQSection from "./FAQ";
+import { Image } from '@imagekit/react';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -95,11 +96,17 @@ const ContactUs = () => {
 
           {/* Right Image */}
           <div className="flex-1 flex justify-center items-center">
-            <img
-              src="https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/Image-4PNLNCB.jpg"
-              alt="Contact woman with laptop"
-              className="rounded-md shadow-lg max-w-full h-auto object-cover"
+            <Image
+            urlEndpoint="https://ik.imagekit.io/x5lc68m0o/"
+            src="woman_with_lap.jpg"
+            width={500}
+            height={500}
+            alt="woman with laptop"
+            loading="lazy"
+            decoding="async"
+            className="rounded-md shadow-lg max-w-full h-auto object-cover"
             />
+
           </div>
         </div>
 
@@ -125,7 +132,7 @@ const ContactUs = () => {
             <div className="text-4xl">📍</div>
             <div>
               <h3 className="font-bold uppercase text-black">OFFICE ADDRESS</h3>
-              <p>#7, AP NGO HOME, Main Road, </p>
+              <p>#7, AP-NGO-HOME, Main Road, </p>
               <p>Parvathipuram, AP-535501.</p>
             </div>
           </div>

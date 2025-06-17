@@ -27,59 +27,59 @@ const PopularCoursesSection = () => {
   const courses = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
+      image: 'https://ik.imagekit.io/x5lc68m0o/computer.jpg',
       title: 'Complete Web Development Bootcamp',
-      instructor: 'Sarah Johnson',
+      instructor: 'Sai Ch',
       rating: 4.9,
       reviewCount: 234,
       students: 1234,
       duration: '40 hours',
-      price: '$89',
-      originalPrice: '$129',
+      price: '₹7k',
+      originalPrice: '₹12k',
       description: 'Learn HTML, CSS, JavaScript, React, and Node.js from scratch',
       level: 'Beginner to Advanced'
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
-      title: 'UI/UX Design Masterclass',
-      instructor: 'Mike Chen',
-      rating: 4.8,
-      reviewCount: 189,
-      students: 987,
-      duration: '35 hours',
-      price: '$79',
-      originalPrice: '$119',
-      description: 'Master the principles of user interface and user experience design',
-      level: 'Intermediate'
-    },
-    {
-      id: 3,
-      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
-      title: 'Digital Marketing Strategy',
-      instructor: 'Emily Davis',
-      rating: 4.7,
-      reviewCount: 156,
-      students: 756,
-      duration: '25 hours',
-      price: '$69',
-      originalPrice: '$99',
-      description: 'Build effective digital marketing campaigns that convert',
-      level: 'Beginner'
-    },
-    {
-      id: 4,
-      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5',
+      image: 'https://ik.imagekit.io/x5lc68m0o/datascience.jpg',
       title: 'Python for Data Science',
-      instructor: 'Dr. Alex Kumar',
+      instructor: 'Sai Ch',
       rating: 4.9,
       reviewCount: 289,
       students: 1567,
       duration: '50 hours',
-      price: '$99',
-      originalPrice: '$149',
+      price: '₹9k',
+      originalPrice: '₹15k',
       description: 'Master Python programming and data analysis techniques',
       level: 'Intermediate to Advanced'
+    },
+    {
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
+      title: 'UI/UX Design Masterclass',
+      instructor: 'Kishore R',
+      rating: 4.8,
+      reviewCount: 189,
+      students: 987,
+      duration: '35 hours',
+      price: '₹5k',
+      originalPrice: '₹12k',
+      description: 'Master the principles of user interface and user experience design',
+      level: 'Intermediate'
+    },
+    {
+      id: 4,
+      image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
+      title: 'Digital Marketing Strategy',
+      instructor: 'Benny B',
+      rating: 4.7,
+      reviewCount: 156,
+      students: 756,
+      duration: '25 hours',
+      price: '₹5k',
+      originalPrice: '₹10k',
+      description: 'Build effective digital marketing campaigns that convert',
+      level: 'Beginner'
     }
   ];
 
@@ -115,7 +115,7 @@ const PopularCoursesSection = () => {
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <PlayCircle className="w-16 h-16 text-white" />
                 </div>
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-4 py-2">
+                <div className="absolute top-10 right-4 bg-white/95 backdrop-blur-sm rounded-full px-4 py-2">
                   <span className="text-lg font-bold text-text-black">{course.price}</span>
                   <span className="text-sm text-text-gray line-through ml-2">{course.originalPrice}</span>
                 </div>
