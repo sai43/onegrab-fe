@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Star, Crown } from 'lucide-react';
 import { Button } from './ui/button';
+import styles from './HeroSection.module.css';
 
 const PricingSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -87,7 +88,7 @@ const PricingSection = () => {
   ];
 
   return (
-    <section id="plans" ref={sectionRef} className="py-24 bg-pastel-bg">
+    <section id="plans" ref={sectionRef}  className={`${styles.pricingBg} py-24`}>
       <div className="container mx-auto px-4">
         <div className={`text-center mb-20 transition-all duration-1000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'

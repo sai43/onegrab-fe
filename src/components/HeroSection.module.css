@@ -1,20 +1,36 @@
-.heroBg {
+.heroBg,
+.pricingBg {
   position: relative;
-  background-color: #E1CAFF;
-  background-image: url('https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/BG_30-1-WMR6JB.jpg');
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-position: center center;
   background-size: cover;
-  background-blend-mode: multiply;
-  min-height: 100vh; /* Ensure it fills the viewport height */
 }
-  
-  .heroBg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: #E1CAFF;
-    pointer-events: none;
-    z-index: 0;
-  }
-  
+
+.heroBg {
+  background-color: #E1CAFF;
+  background-image: url('https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/BG_30-1-WMR6JB.jpg');
+  background-blend-mode: multiply;
+  min-height: 100vh;
+}
+
+.heroBg::before,
+.pricingBg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heroBg::before {
+  background-color: #E1CAFF;
+  opacity: 0.1;
+}
+
+.pricingBg {
+  background-image: url('https://flex.heydenstd.com/sinau/wp-content/uploads/sites/8/2025/05/BG_30-1-WMR6JB.jpg');
+}
+
+.pricingBg::before {
+  background-color: #C2F1F3;
+  opacity: 0.4;
+}

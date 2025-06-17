@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import CategoriesSection from '../components/CategoriesSection';
 import PopularCoursesSection from '../components/PopularCoursesSection';
-import BenefitsSection from '../components/BenefitsSection';
+import BenefitsSection from '../components/AboutUs';
 import PricingSection from '../components/PricingSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import ContactUs from '@/components/ContactUs';
@@ -16,9 +16,9 @@ const Index = () => {
       <HeroSection />
       <CategoriesSection />
       <PopularCoursesSection />
-      <BenefitsSection />
       <PricingSection />
       <TestimonialsSection />
+      <BenefitsSection />
       <ContactUs />
       <Footer />
     </div>
