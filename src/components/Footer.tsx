@@ -69,7 +69,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>Shop #7, APNGO Home, Near District Court, Parvathipuram, AP-535501.</span>
+                <span>#7, AP-NGO Home,Main Road, <br/> Parvathipuram, AP-535501.</span>
               </div>
             </div>
           </div>

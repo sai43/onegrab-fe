@@ -27,7 +27,7 @@ const TestimonialsSection = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Jennifer Martinez',
+      name: 'Swaroop R',
       role: 'Web Developer',
       company: 'TechCorp Inc.',
       image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400',
@@ -36,7 +36,7 @@ const TestimonialsSection = () => {
     },
     {
       id: 2,
-      name: 'Michael Chen',
+      name: 'Mahesh G',
       role: 'UX Designer',
       company: 'Design Studio Pro',
       image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400',
@@ -45,7 +45,7 @@ const TestimonialsSection = () => {
     },
     {
       id: 3,
-      name: 'Sarah Thompson',
+      name: 'Naveen K',
       role: 'Digital Marketer',
       company: 'Marketing Solutions Ltd.',
       image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400',
@@ -54,7 +54,7 @@ const TestimonialsSection = () => {
     },
     {
       id: 4,
-      name: 'David Rodriguez',
+      name: 'Abhilash M',
       role: 'Data Scientist',
       company: 'Analytics Pro',
       image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400',

@@ -27,7 +27,7 @@ const PricingSection = () => {
   const plans = [
     {
       name: 'Starter',
-      price: '$25',
+      price: '₹1999',
       period: '/month',
       description: 'Perfect for beginners starting their learning journey',
       features: [
@@ -45,7 +45,7 @@ const PricingSection = () => {
     },
     {
       name: 'Pro',
-      price: '$45',
+      price: '₹4999',
       period: '/month',
       description: 'Most popular choice for serious learners',
       features: [
@@ -65,7 +65,7 @@ const PricingSection = () => {
     },
     {
       name: 'Master',
-      price: '$89',
+      price: '₹7999',
       period: '/month',
       description: 'Complete access for professionals and teams',
       features: [
@@ -87,7 +87,7 @@ const PricingSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 bg-pastel-bg">
+    <section id="plans" ref={sectionRef} className="py-24 bg-pastel-bg">
       <div className="container mx-auto px-4">
         <div className={`text-center mb-20 transition-all duration-1000 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
@@ -133,7 +133,7 @@ const PricingSection = () => {
                     {plan.description}
                   </p>
                   <div className="flex items-baseline justify-center mb-2">
-                    <span className="text-6xl font-bold text-text-black">
+                    <span className="text-4xl font-bold text-text-black">
                       {plan.price}
                     </span>
                     <span className="text-xl text-text-gray ml-2">
@@ -145,15 +145,6 @@ const PricingSection = () => {
                   </div>
                 </div>
 
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start space-x-3">
-                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                      <span className="text-text-gray leading-relaxed">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
                 <Button
                   className={`w-full py-4 text-lg font-bold transition-all duration-300 rounded-xl ${
                     plan.isPopular
@@ -163,6 +154,15 @@ const PricingSection = () => {
                 >
                   {plan.buttonText}
                 </Button>
+
+                <ul className="space-y-4 mt-8">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start space-x-3">
+                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
+                      <span className="text-text-gray leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
@@ -170,7 +170,7 @@ const PricingSection = () => {
 
         <div className="text-center mt-16">
           <p className="text-lg text-text-gray mb-4">
-            All plans include a 14-day free trial. No credit card required.
+            All plans include a 7-day free trial. No credit card required.
           </p>
           <p className="text-sm text-text-gray">
             ✓ Cancel anytime ✓ 30-day money-back guarantee ✓ No setup fees
