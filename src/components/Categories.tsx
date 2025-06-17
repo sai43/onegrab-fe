@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BookOpen, Code, Palette, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 
-const CategoriesSection = () => {
+const Categories = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -102,4 +102,4 @@ const CategoriesSection = () => {
   );
 };
 
-export default CategoriesSection;
+export default Categories;

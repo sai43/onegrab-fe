@@ -26,20 +26,19 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Load user from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem('onegrab_user');
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#' },
-    { name: 'Categories', href: '#categories' },
-    { name: 'Courses', href: '#courses' },
-    { name: 'Plans', href: '#plans' },
-    { name: 'Blog', href: '#blog' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact Us', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Categories', href: '/categories' },
+    { name: 'Courses', href: '/courses' },
+    { name: 'Plans', href: '/plans' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact Us', href: '/contact' },
   ];
 
   const handleLoginSuccess = (username: string, token: string) => {
@@ -76,14 +75,12 @@ const Header = () => {
   return (
     <>
       <header
-        className={`bg-white w-[95%] mx-[3%] rounded-[10px] border-2 border-black fixed top-5 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-lg py-3' : 'bg-transparent py-4'
+        className={`bg-white w-[92%] mx-[3%] rounded-[10px] border-2 border-black fixed top-5 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-lg py-2' : 'bg-transparent py-2'
         }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            
-            {/* Logo */}         
             <div className="flex items-center">
               <Link to="/" aria-label="Go to homepage">
                 <h1 className="text-2xl font-anton font-bold text-text-black tracking-extra-wide cursor-pointer">
@@ -92,20 +89,30 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
-                >
-                  {item.name}
-                </a>
-              ))}
+              {navItems.map((item) =>
+                item.href.startsWith('/') ? (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                )
+              )}
             </nav>
 
-            {/* Desktop Auth Buttons or Profile */}
             <div className="hidden md:flex items-center space-x-4">
               {!user ? (
                 <>
@@ -137,7 +144,6 @@ const Header = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               className="md:hidden p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -150,7 +156,6 @@ const Header = () => {
             </button>
           </div>
 
-          {/* Mobile Menu */}
           {isMobileMenuOpen && (
             <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
               <nav className="flex flex-col space-y-4 mt-4">
@@ -206,7 +211,6 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Modals */}
       {showLogin && (
         <LoginForm
           onLoginSuccess={handleLoginSuccess}

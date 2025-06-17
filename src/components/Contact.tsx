@@ -24,7 +24,7 @@ const ContactUs = () => {
   return (
     <>
       {/* Help Text Container */}
-      <section id="contact" className="max-w-7xl mt-6 mx-auto my-16 p-8 flex flex-col lg:flex-row gap-6">
+      <section id="contact" className="mt-14 max-w-7xl mx-auto my-16 p-8 flex flex-col lg:flex-row gap-6">
         <div className="flex-1">
           <h2 className="text-6xl font-anton font-bold uppercase leading-tight">
             We’re here to help you<br />anytime, anywhere

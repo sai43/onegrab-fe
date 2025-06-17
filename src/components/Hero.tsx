@@ -33,7 +33,7 @@ const floatingImages = [
 ];
 
 
-const HeroSection = () => {
+const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -143,4 +143,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default Hero;

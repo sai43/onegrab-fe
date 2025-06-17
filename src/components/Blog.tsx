@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 interface BlogPost {
   id: number;
@@ -34,52 +36,58 @@ const blogPosts: BlogPost[] = [
 
 const Blog: React.FC = () => {
   return (
-    <section id="blog" className="py-16 bg-gray-50" aria-labelledby="blog-heading">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <h2
-          id="blog-heading"
-          className="text-3xl font-bold text-gray-900 mb-12 text-center"
-        >
-          Latest from Our Blog
-        </h2>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.map(({ id, title, excerpt, imageUrl, url }) => (
-            <article
-              key={id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-            >
-              <a href={url} aria-label={`Read more about ${title}`}>
-                <img
-                  src={imageUrl}
-                  alt={title}
-                  className="w-full h-48 object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">
-                  <a
-                    href={url}
-                    className="hover:text-indigo-600 transition-colors duration-200"
+    <>
+      <main
+        id="blog"
+        aria-labelledby="blog-heading"
+        className="min-h-screen py-16 bg-gray-50 mt-10"
+      >
+        <div className="container mx-auto px-6 max-w-7xl">
+          <h2
+            id="blog-heading"
+            className="text-3xl font-bold text-gray-900 mb-12 text-center"
+          >
+            Latest from Our Blog
+          </h2>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.map(({ id, title, excerpt, imageUrl, url }) => (
+              <article
+                key={id}
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              >
+                <Link to={url} aria-label={`Read more about ${title}`}>
+                  <img
+                    src={imageUrl}
+                    alt={title}
+                    className="w-full h-48 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </Link>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">
+                    <Link
+                      to={url}
+                      className="hover:text-indigo-600 transition-colors duration-200"
+                    >
+                      {title}
+                    </Link>
+                  </h3>
+                  <p className="text-gray-700 mb-4">{excerpt}</p>
+                  <Link
+                    to={url}
+                    className="text-indigo-600 font-semibold hover:underline"
+                    aria-label={`Read full article: ${title}`}
                   >
-                    {title}
-                  </a>
-                </h3>
-                <p className="text-gray-700 mb-4">{excerpt}</p>
-                <a
-                  href={url}
-                  className="text-indigo-600 font-semibold hover:underline"
-                  aria-label={`Read full article: ${title}`}
-                >
-                  Read More &rarr;
-                </a>
-              </div>
-            </article>
-          ))}
+                    Read More &rarr;
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </main>
+    </>
   );
 };
 
