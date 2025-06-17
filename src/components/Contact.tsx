@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FAQSection from "./FAQSection";
+import FAQSection from "./FAQ";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({

@@ -1,12 +1,12 @@
 
 import Header from '../components/Header';
-import HeroSection from '../components/HeroSection';
-import CategoriesSection from '../components/CategoriesSection';
-import PopularCoursesSection from '../components/PopularCoursesSection';
-import BenefitsSection from '../components/AboutUs';
-import PricingSection from '../components/PricingSection';
-import TestimonialsSection from '../components/TestimonialsSection';
-import ContactUs from '@/components/ContactUs';
+import HeroSection from '../components/Hero';
+import CategoriesSection from '../components/Categories';
+import PopularCoursesSection from '../components/Courses';
+import BenefitsSection from '../components/About';
+import PricingSection from '../components/Plans';
+import TestimonialsSection from '../components/Testimonials';
+import ContactUs from '@/components/Contact';
 import Footer from '../components/Footer';
 
 const Index = () => {
