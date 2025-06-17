@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CheckCircle, Clock, Globe, Award, Users, BookOpen } from 'lucide-react';
 import { Button } from './ui/button';
 
-const BenefitsSection = () => {
+const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -130,4 +130,4 @@ const BenefitsSection = () => {
   );
 };
 
-export default BenefitsSection;
+export default About;

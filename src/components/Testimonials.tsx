@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
-const TestimonialsSection = () => {
+const Testimonials = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -171,4 +171,4 @@ const TestimonialsSection = () => {
   );
 };
 
-export default TestimonialsSection;
+export default Testimonials;

@@ -4,7 +4,7 @@ import { Check, Star, Crown } from 'lucide-react';
 import { Button } from './ui/button';
 import styles from './HeroSection.module.css';
 
-const PricingSection = () => {
+const Plans = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -182,4 +182,4 @@ const PricingSection = () => {
   );
 };
 
-export default PricingSection;
+export default Plans;

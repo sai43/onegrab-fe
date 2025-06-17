@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Star, Clock, Users, PlayCircle } from 'lucide-react';
 import { Button } from './ui/button';
 
-const PopularCoursesSection = () => {
+const Courses = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -172,4 +172,4 @@ const PopularCoursesSection = () => {
   );
 };
 
-export default PopularCoursesSection;
+export default Courses;
