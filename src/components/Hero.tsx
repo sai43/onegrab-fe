@@ -76,12 +76,20 @@ const Hero = () => {
               <br />
               <span className="text-text-black">ANYWHERE, ANYTIME EASILY</span>
             </h1>
+            
             <div
-              className="absolute top-[0] left-0 -rotate-12 bg-[#BBF0F4] px-4 py-1 rounded-sm shadow-md text-sm font-semibold text-black select-none"
-              style={{ fontFamily: "'Poppins', sans-serif", transformOrigin: 'left center' }}
+              className="absolute top-0 left-0 bg-[#BBF0F4] px-4 py-1 rounded-sm shadow-md text-sm font-semibold text-black select-none"
+              style={{
+                animation: 'flipDropIn 0.8s ease forwards',
+                animationDelay: '1.5s',
+                fontFamily: "'Poppins', sans-serif",
+                transformOrigin: 'left center',
+              }}
             >
-              OneGrab Online
+              Grab Course
             </div>
+
+
           </div>
 
           <p className="text-lg md:text-xl lg:text-2xl text-text-gray mb-10 max-w-3xl mx-auto font-medium">
@@ -127,16 +135,21 @@ const Hero = () => {
       {/* Floating dots animation */}
       <div className="absolute inset-0 pointer-events-none z-10">
         <div
-          className="absolute top-1/4 left-1/4 w-3 h-3 bg-accent rounded-full animate-bounce opacity-60"
+          className="absolute top-1/4 left-1/4 w-4 h-4 bg-[#29ad5a] rounded-full animate-bounce opacity-50"
           style={{ animationDelay: '1s' }}
         />
         <div
-          className="absolute top-1/3 right-1/3 w-2 h-2 bg-primary rounded-full animate-bounce opacity-70"
+          className="absolute top-1/4 right-1/3 w-6 h-6 bg-[#2996e3] rounded-full animate-bounce opacity-50"
           style={{ animationDelay: '1.5s' }}
         />
         <div
-          className="absolute bottom-1/4 left-1/3 w-4 h-4 bg-accent-yellow rounded-full animate-bounce opacity-50"
+          className="absolute bottom-1/4 right-1/3 w-6 h-6 bg-[#d52929] rounded-full animate-bounce opacity-50"
           style={{ animationDelay: '2s' }}
+        />
+
+        <div
+          className="absolute bottom-1/3 left-1/4 w-4 h-4 bg-[#3a2dee] rounded-full animate-bounce opacity-50"
+          style={{ animationDelay: '2.5s' }}
         />
       </div>
     </section>

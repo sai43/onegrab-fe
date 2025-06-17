@@ -67,7 +67,8 @@ export default {
 				},
 				'text-black': '#000209',
 				'text-gray': '#3B3B3C',
-				'pastel-bg': '#F4F7FA'
+				'pastel-bg': '#F4F7FA',
+				'light-green': '#4ADE80'
 			},
 			fontFamily: {
 				'anton': ['Anton', 'sans-serif'],

@@ -125,3 +125,35 @@ html {
 .custom-light-blue {
   background-color: #C2F1F3;
 }
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px) rotate(-12deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(-12deg);
+  }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinkCaret {
+  50% { border-color: transparent }
+  100% { border-color: black }
+}
+
+@keyframes flipDropIn {
+  0% {
+    opacity: 0;
+    transform: rotateX(90deg) translateY(-50px) rotate(-12deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) rotate(-12deg);
+  }
+}
