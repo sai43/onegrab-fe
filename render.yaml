@@ -1,0 +1,9 @@
+staticSites:
+  - name: onegrab-fe
+    branch: master
+    buildCommand: npm run build
+    publishPath: dist
+    redirect:
+      - source: /*
+        destination: /index.html
+        status: 200
