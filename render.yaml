@@ -1,9 +1,16 @@
-staticSites:
-  - name: onegrab-fe
-    branch: master
-    buildCommand: npm run build
-    publishPath: dist
-    redirect:
-      - source: /*
-        destination: /index.html
-        status: 200
+services:
+- type: web
+  name: onegrab-fe
+  runtime: static
+  repo: https://github.com/sai43/onegrab-fe
+  buildCommand: vite build
+  staticPublishPath: dist
+  domains:
+  - onegrab.in
+  - www.onegrab.in
+  routes:
+  - type: redirect
+    source: /*
+    destination: /index.html
+  autoDeployTrigger: commit
+version: "1"
