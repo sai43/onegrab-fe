@@ -86,6 +86,16 @@ const App = () => (
                 </MainLayout>
               }
             />
+            
+            <Route
+              path="/confirm"
+              element={
+                <MainLayout>
+                  <ConfirmPage />
+                </MainLayout>
+              }
+            />
+
             {/* Catch-all */}
             <Route
               path="*"
@@ -95,7 +105,6 @@ const App = () => (
                 </MainLayout>
               }
             />
-            <Route path="/confirm" element={<ConfirmPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

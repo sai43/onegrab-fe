@@ -26,7 +26,13 @@ function ConfirmPage() {
     }
   }, [location]);
 
-  return <div>Confirming your account...</div>;
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-2">
+      <div className="bg-white rounded-lg shadow-md p-4 max-w-md w-full text-center">
+        <p className="text-lg font-semibold text-gray-700">Confirming your account...</p>
+      </div>
+    </div>
+  );
 }
 
 export default ConfirmPage;
