@@ -18,6 +18,7 @@ import Contact from "./components/Contact";
 import Home from "./components/Home";
 
 import { AuthProvider } from "./context/AuthContext";
+import ConfirmPage from "./components/ConfirmPage";
 
 const queryClient = new QueryClient();
 
@@ -94,6 +95,7 @@ const App = () => (
                 </MainLayout>
               }
             />
+            <Route path="/confirm" element={<ConfirmPage />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
