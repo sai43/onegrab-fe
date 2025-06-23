@@ -1,11 +1,13 @@
 import { useState, FormEvent } from 'react';
 
 interface SignupFormProps {
-  onSignupSuccess: (username: string, token: string) => void;
+  onSignupSuccess: (user: { username: string; email: string }, token: string) => void;
   onClose: () => void;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -21,35 +23,42 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
       return;
     }
 
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+    const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
-    const raw = JSON.stringify({
+    const payload = {
       user: {
+        first_name: firstName,
+        last_name: lastName,
         username,
         email,
         phone,
         password,
         password_confirmation: passwordConfirmation,
       },
-    });
+    };
 
     try {
-      const response = await fetch('http://localhost:4343/api/v1/users', {
+      const response = await fetch(`${backendUrl}/api/v1/users`, {
         method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
         const err = await response.json();
-        setError(err.error || 'Signup failed');
+        if (err.errors && Array.isArray(err.errors)) {
+          setError(err.errors.join(', '));
+        } else if (err.error) {
+          setError(err.error);
+        } else {
+          setError('Signup failed');
+        }
         return;
       }
 
       const result = await response.json();
-      onSignupSuccess(result.username, result.token);
+      // Pass back the user object and token for the parent to handle/store
+      onSignupSuccess(result.data, result.token);
       onClose();
     } catch {
       setError('Network error');
@@ -70,6 +79,22 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
         {error && <div className="mb-4 text-red-600 font-semibold">{error}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+          />
           <input
             type="text"
             placeholder="Username"

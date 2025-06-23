@@ -1,7 +1,16 @@
 import { useState, FormEvent } from 'react';
 
+interface User {
+  id: number;
+  first_name: string | null;
+  last_name: string | null;
+  username: string;
+  email: string;
+  phone: string;
+}
+
 interface LoginFormProps {
-  onLoginSuccess: (username: string, token: string) => void;
+  onLoginSuccess: (user: User, token: string) => void;
   onClose: () => void;
 }
 
@@ -13,32 +22,30 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onClose }) => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    const raw = JSON.stringify({
-      user: {
-        login,
-        password,
-      },
-    });
+    const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
     try {
-      const response = await fetch('http://localhost:4343/api/v1/users/sign_in', {
+      const response = await fetch(`${backendUrl}/api/v1/users/login`, {
         method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: { login, password } }),
       });
 
       if (!response.ok) {
         const err = await response.json();
-        setError(err.error || 'Login failed');
+        if (err.errors && Array.isArray(err.errors)) {
+          setError(err.errors.join(', '));
+        } else if (err.error) {
+          setError(err.error);
+        } else {
+          setError('Login failed');
+        }
         return;
       }
 
       const result = await response.json();
-      onLoginSuccess(result.username, result.token);
+      debugger;
+      onLoginSuccess(result.user, result.token);
       onClose();
     } catch {
       setError('Network error');

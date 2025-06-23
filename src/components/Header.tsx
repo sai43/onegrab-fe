@@ -6,7 +6,16 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 
 interface User {
+  id: number;
+  first_name: string | null;
+  last_name: string | null;
   username: string;
+  email: string;
+  phone: string;
+}
+
+interface StoredUserData {
+  user: User;
   token: string;
 }
 
@@ -15,20 +24,28 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  // Use correct type: user object + token
+  const [userData, setUserData] = useState<StoredUserData | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Load from localStorage on mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('onegrab_user');
-    if (storedUser) setUser(JSON.parse(storedUser));
+    const stored = localStorage.getItem('onegrab_user');
+    if (stored) {
+      try {
+        const parsed: StoredUserData = JSON.parse(stored);
+        setUserData(parsed);
+      } catch {
+        localStorage.removeItem('onegrab_user');
+      }
+    }
   }, []);
 
   const navItems = [
@@ -41,34 +58,33 @@ const Header = () => {
     { name: 'Contact Us', href: '/contact' },
   ];
 
-  const handleLoginSuccess = (username: string, token: string) => {
-    const userData = { username, token };
-    setUser(userData);
-    localStorage.setItem('onegrab_user', JSON.stringify(userData));
+  // Save user and token properly on login
+  const handleLoginSuccess = (user: User, token: string) => {
+    const data = { user, token };
+    setUserData(data);
+    localStorage.setItem('onegrab_user', JSON.stringify(data));
   };
 
-  const handleSignupSuccess = (username: string, token: string) => {
-    const userData = { username, token };
-    setUser(userData);
-    localStorage.setItem('onegrab_user', JSON.stringify(userData));
+  // Same for signup
+  const handleSignupSuccess = (user: User, token: string) => {
+    const data = { user, token };
+    setUserData(data);
+    localStorage.setItem('onegrab_user', JSON.stringify(data));
   };
 
   const handleLogout = async () => {
-    if (!user?.token) return;
-
-    const myHeaders = new Headers();
-    myHeaders.append('Authorization', `Bearer ${user.token}`);
+    if (!userData?.token) return;
 
     try {
-      await fetch('http://localhost:4343/api/v1/users/sign_out', {
+      await fetch('http://localhost:4343/api/v1/users/logout', {
         method: 'DELETE',
-        headers: myHeaders,
+        headers: { Authorization: `Bearer ${userData.token}` },
       });
     } catch {
       // optionally handle error here
     }
 
-    setUser(null);
+    setUserData(null);
     localStorage.removeItem('onegrab_user');
   };
 
@@ -90,31 +106,20 @@ const Header = () => {
             </div>
 
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) =>
-                item.href.startsWith('/') ? (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ) : (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                )
-              )}
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </nav>
 
             <div className="hidden md:flex items-center space-x-4">
-              {!user ? (
+              {!userData ? (
                 <>
                   <Button
                     variant="ghost"
@@ -133,7 +138,7 @@ const Header = () => {
               ) : (
                 <div className="flex items-center space-x-4">
                   <UserCircle2 className="w-8 h-8 text-text-black" />
-                  <span className="font-semibold">{user.username}</span>
+                  <span className="font-semibold">{userData.user.username}</span>
                   <button
                     onClick={handleLogout}
                     className="text-red-600 hover:text-red-800 font-semibold"
@@ -160,17 +165,17 @@ const Header = () => {
             <div className="md:hidden mt-4 pb-4 border-t border-gray-200">
               <nav className="flex flex-col space-y-4 mt-4">
                 {navItems.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     className="text-text-gray hover:text-text-black transition-colors duration-200 font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
                 <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                  {!user ? (
+                  {!userData ? (
                     <>
                       <Button
                         variant="ghost"
@@ -195,7 +200,7 @@ const Header = () => {
                   ) : (
                     <div className="flex items-center space-x-4">
                       <UserCircle2 className="w-8 h-8 text-text-black" />
-                      <span className="font-semibold">{user.username}</span>
+                      <span className="font-semibold">{userData.user.username}</span>
                       <button
                         onClick={handleLogout}
                         className="text-red-600 hover:text-red-800 font-semibold"
