@@ -24,7 +24,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  // Use correct type: user object + token
+  const [loadingLogout, setLoadingLogout] = useState(false);  // Added
   const [userData, setUserData] = useState<StoredUserData | null>(null);
 
   useEffect(() => {
@@ -35,7 +35,6 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Load from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem('onegrab_user');
     if (stored) {
@@ -58,14 +57,12 @@ const Header = () => {
     { name: 'Contact Us', href: '/contact' },
   ];
 
-  // Save user and token properly on login
   const handleLoginSuccess = (user: User, token: string) => {
     const data = { user, token };
     setUserData(data);
     localStorage.setItem('onegrab_user', JSON.stringify(data));
   };
 
-  // Same for signup
   const handleSignupSuccess = (user: User, token: string) => {
     const data = { user, token };
     setUserData(data);
@@ -74,6 +71,8 @@ const Header = () => {
 
   const handleLogout = async () => {
     if (!userData?.token) return;
+
+    setLoadingLogout(true);
 
     const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -88,6 +87,7 @@ const Header = () => {
 
     setUserData(null);
     localStorage.removeItem('onegrab_user');
+    setLoadingLogout(false);
   };
 
   return (
@@ -143,9 +143,12 @@ const Header = () => {
                   <span className="font-semibold">{userData.user.username}</span>
                   <button
                     onClick={handleLogout}
-                    className="text-red-600 hover:text-red-800 font-semibold"
+                    disabled={loadingLogout}
+                    className={`text-red-600 font-semibold ${
+                      loadingLogout ? 'cursor-not-allowed opacity-50' : 'hover:text-red-800'
+                    }`}
                   >
-                    Logout
+                    {loadingLogout ? 'Logging out...' : 'Logout'}
                   </button>
                 </div>
               )}
@@ -205,9 +208,12 @@ const Header = () => {
                       <span className="font-semibold">{userData.user.username}</span>
                       <button
                         onClick={handleLogout}
-                        className="text-red-600 hover:text-red-800 font-semibold"
+                        disabled={loadingLogout}
+                        className={`text-red-600 font-semibold ${
+                          loadingLogout ? 'cursor-not-allowed opacity-50' : 'hover:text-red-800'
+                        }`}
                       >
-                        Logout
+                        {loadingLogout ? 'Logging out...' : 'Logout'}
                       </button>
                     </div>
                   )}

@@ -80,6 +80,8 @@ const Courses = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [courses, setCourses] = useState<Course[]>(DEFAULT_COURSES);
+  const [loading, setLoading] = useState(false);  // added loading state
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -103,6 +105,9 @@ const Courses = () => {
 
     const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
+    setLoading(true);
+    setError(null);
+
     fetch(`${backendUrl}/api/v1/courses`, {
       headers: {
         'Content-Type': 'application/json',
@@ -116,7 +121,6 @@ const Courses = () => {
       .then((data) => {
         if (!data.courses?.data) throw new Error('Malformed response');
 
-        // Map API courses to UI Course type
         const mappedCourses = data.courses.data.map((courseObj: any) => {
           const attrs = courseObj.attributes;
           return {
@@ -124,7 +128,6 @@ const Courses = () => {
             title: attrs.title,
             description: attrs.description,
             instructor: attrs.author_name || 'Unknown',
-            // You can add more fields here if your API provides them
             rating: undefined,
             reviewCount: undefined,
             students: undefined,
@@ -140,8 +143,11 @@ const Courses = () => {
 
         setCourses(mappedCourses);
       })
-      .catch(() => {
-        // fallback: keep default courses on error or do nothing
+      .catch((e) => {
+        setError(e.message || 'Error loading courses');
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -161,7 +167,23 @@ const Courses = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        {loading && (
+          <div className="text-center mb-8 text-lg text-text-gray">
+            Loading courses...
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center mb-8 text-red-600 font-semibold">
+            {error}
+          </div>
+        )}
+
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
+          aria-busy={loading}
+          aria-live="polite"
+        >
           {courses.map((course, index) => (
             <div
               key={course.id}
@@ -169,6 +191,7 @@ const Courses = () => {
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
               }`}
               style={{ transitionDelay: `${index * 0.2}s` }}
+              aria-disabled={loading}
             >
               <div className="relative overflow-hidden">
                 {course.image ? (
@@ -227,7 +250,10 @@ const Courses = () => {
                   </div>
                 </div>
 
-                <Button className="w-full bg-primary text-text-black hover:bg-primary-dark transition-colors duration-200 py-3 font-bold rounded-xl">
+                <Button
+                  className="w-full bg-primary text-text-black hover:bg-primary-dark transition-colors duration-200 py-3 font-bold rounded-xl"
+                  disabled={loading} // disable while loading
+                >
                   Enroll Now
                 </Button>
               </div>
@@ -239,8 +265,9 @@ const Courses = () => {
           <Button
             variant="outline"
             className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300"
+            disabled={loading} // disable while loading
           >
-            View All Courses
+            {loading ? 'Loading...' : 'View All Courses'}
           </Button>
         </div>
       </div>
