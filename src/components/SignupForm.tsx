@@ -57,8 +57,14 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
       }
 
       const result = await response.json();
+
+      if (!result.user || !result.user.username) {
+        setError('Invalid user data received');
+        return;
+      }
+      
       // Pass back the user object and token for the parent to handle/store
-      onSignupSuccess(result.data, result.token);
+      onSignupSuccess(result.user, result.token);
       onClose();
     } catch {
       setError('Network error');

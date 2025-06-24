@@ -75,8 +75,10 @@ const Header = () => {
   const handleLogout = async () => {
     if (!userData?.token) return;
 
+    const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
     try {
-      await fetch('http://localhost:4343/api/v1/users/logout', {
+      await fetch(`${backendUrl}/api/v1/users/logout`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${userData.token}` },
       });
