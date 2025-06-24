@@ -18,9 +18,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onClose }) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    setLoading(true);
+    setError('');
 
     const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -40,15 +44,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onClose }) => {
         } else {
           setError('Login failed');
         }
+        setLoading(false);
         return;
       }
 
       const result = await response.json();
-      debugger;
+
       onLoginSuccess(result.user, result.token);
       onClose();
     } catch {
       setError('Network error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,6 +80,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onClose }) => {
             onChange={(e) => setLogin(e.target.value)}
             required
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+            disabled={loading}
           />
           <input
             type="password"
@@ -81,17 +89,44 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+            disabled={loading}
           />
           <div className="flex justify-between items-center">
             <button
               type="submit"
-              className="bg-accent text-text-black font-semibold px-6 py-2 rounded hover:bg-accent-yellow transition-colors"
+              disabled={loading}
+              className={`bg-accent text-text-black font-semibold px-6 py-2 rounded transition-colors flex items-center justify-center space-x-2 ${
+                loading ? 'cursor-not-allowed opacity-50' : 'hover:bg-accent-yellow'
+              }`}
             >
-              Login
+              {loading && (
+                <svg
+                  className="animate-spin h-5 w-5 text-text-black"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+              )}
+              <span>{loading ? 'Loading...' : 'Login'}</span>
             </button>
             <button
               type="button"
               onClick={onClose}
+              disabled={loading}
               className="text-sm text-gray-600 hover:underline"
             >
               Cancel

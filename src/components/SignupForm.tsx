@@ -1,7 +1,12 @@
 import { useState, FormEvent } from 'react';
 
+interface User {
+  username: string;
+  email: string;
+}
+
 interface SignupFormProps {
-  onSignupSuccess: (user: { username: string; email: string }, token: string) => void;
+  onSignupSuccess: (user: User, token: string) => void;
   onClose: () => void;
 }
 
@@ -14,6 +19,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -22,6 +28,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
       setError('Passwords do not match');
       return;
     }
+
+    setLoading(true);
+    setError('');
 
     const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -53,6 +62,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
         } else {
           setError('Signup failed');
         }
+        setLoading(false);
         return;
       }
 
@@ -60,14 +70,16 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
 
       if (!result.user || !result.user.username) {
         setError('Invalid user data received');
+        setLoading(false);
         return;
       }
-      
-      // Pass back the user object and token for the parent to handle/store
+
       onSignupSuccess(result.user, result.token);
       onClose();
     } catch {
       setError('Network error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -143,13 +155,17 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onClose }) => 
           <div className="flex justify-between items-center">
             <button
               type="submit"
-              className="bg-accent text-text-black font-semibold px-6 py-2 rounded hover:bg-accent-yellow transition-colors"
+              disabled={loading}
+              className={`bg-accent text-text-black font-semibold px-6 py-2 rounded transition-colors ${
+                loading ? 'cursor-not-allowed opacity-50' : 'hover:bg-accent-yellow'
+              }`}
             >
-              Sign Up
+              {loading ? 'Loading...' : 'Sign Up'}
             </button>
             <button
               type="button"
               onClick={onClose}
+              disabled={loading}
               className="text-sm text-gray-600 hover:underline"
             >
               Cancel
