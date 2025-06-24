@@ -9,7 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Blog from "./components/Blog";
-import MainLayout from "./components/Layout";
+import Layout from "./components/Layout";
 import Categories from "./components/Categories";
 import Courses from "./components/Courses";
 import Plans from "./components/Plans";
@@ -33,66 +33,66 @@ const App = () => (
             <Route
               path="/"
               element={
-                <MainLayout>
+                <Layout>
                   <Home />
-                </MainLayout>
+                </Layout>
               }
             />
             <Route
               path="/categories"
               element={
-                <MainLayout>
+                <Layout>
                   <Categories />
-                </MainLayout>
+                </Layout>
               }
             />
             <Route
               path="/courses"
               element={
-                <MainLayout>
+                <Layout>
                   <Courses />
-                </MainLayout>
+                </Layout>
               }
             />
             <Route
               path="/plans"
               element={
-                <MainLayout>
+                <Layout>
                   <Plans />
-                </MainLayout>
+                </Layout>
               }
             />
             <Route
               path="/blog"
               element={
-                <MainLayout>
+                <Layout>
                   <Blog />
-                </MainLayout>
+                </Layout>
               }
             />
             <Route
               path="/about"
               element={
-                <MainLayout>
+                <Layout>
                   <About />
-                </MainLayout>
+                </Layout>
               }
             />
             <Route
               path="/contact"
               element={
-                <MainLayout>
+                <Layout>
                   <Contact />
-                </MainLayout>
+                </Layout>
               }
             />
             
             <Route
               path="/confirm"
               element={
-                <MainLayout>
+                <Layout>
                   <ConfirmPage />
-                </MainLayout>
+                </Layout>
               }
             />
 
@@ -100,9 +100,9 @@ const App = () => (
             <Route
               path="*"
               element={
-                <MainLayout>
+                <Layout>
                   <NotFound />
-                </MainLayout>
+                </Layout>
               }
             />
           </Routes>
