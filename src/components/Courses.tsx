@@ -101,7 +101,9 @@ const Courses = () => {
 
     if (!token) return; // no token, do not fetch
 
-    fetch('http://localhost:4341/api/v1/courses', {
+    const backendUrl = import.meta.env.VITE_API_BASE_URL;
+
+    fetch(`${backendUrl}/api/v1/courses`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
