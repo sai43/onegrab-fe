@@ -29,11 +29,6 @@ const Courses = () => {
 
   // Fetch courses
   const fetchCourses = useCallback(async () => {
-    const token = localStorage.getItem('onegrab_user')
-      ? JSON.parse(localStorage.getItem('onegrab_user') || '{}').token
-      : null;
-
-    if (!token) return;
 
     setLoading(true);
     setError(null);
@@ -41,8 +36,7 @@ const Courses = () => {
     try {
       const res = await fetch(`${apiBaseUrl}/api/v1/courses`, {
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
       });
 
