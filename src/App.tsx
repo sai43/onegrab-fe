@@ -20,6 +20,7 @@ import Contact from "./components/Contact";
 import MyCourses from "./components/MyCourses";
 import ConfirmPage from "./components/ConfirmPage";
 import NotFound from "./pages/NotFound";
+import CourseDetails from "./components/CourseDetails";
 
 import { AuthProvider } from "./context/AuthContext";
 
@@ -115,6 +116,16 @@ const App = () => {
                   </Layout>
                 }
               />
+
+              <Route
+                path="/my-courses/:slug"
+                element={
+                  <Layout>
+                    <CourseDetails />
+                  </Layout>
+                }
+              />
+
               <Route
                 path="*"
                 element={
