@@ -55,7 +55,6 @@ const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'Categories', href: '/categories' },
     { name: 'Courses', href: '/courses' },
-    { name: 'My Courses', href: '/my-courses' },
     { name: 'Plans', href: '/plans' },
     { name: 'Blog', href: '/blog' },
     { name: 'About Us', href: '/about' },

@@ -64,7 +64,7 @@ const ContactUs = () => {
   return (
     <>
       {/* Your existing JSX */}
-      <section className="bg-[#BFF2F4] p-8 max-w-7xl mx-auto my-16 rounded-md shadow-md">
+      <section id="contact" className="bg-[#BFF2F4] p-8 max-w-7xl mx-auto my-24 rounded-md shadow-md">
         <div className="flex flex-col lg:flex-row gap-8">
           <form className="flex-1 space-y-4" onSubmit={handleSubmit}>
             {error && <div className="mb-4 text-red-600 font-semibold">{error}</div>}
