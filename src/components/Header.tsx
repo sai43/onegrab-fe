@@ -3,7 +3,7 @@ import { Menu, X, UserCircle2 } from 'lucide-react';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { Button } from './ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -12,6 +12,7 @@ interface User {
   username: string;
   email: string;
   phone: string;
+  subscribed: boolean;
 }
 
 interface StoredUserData {
@@ -24,8 +25,10 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const [loadingLogout, setLoadingLogout] = useState(false);  // Added
+  const [loadingLogout, setLoadingLogout] = useState(false);
   const [userData, setUserData] = useState<StoredUserData | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,9 +51,11 @@ const Header = () => {
   }, []);
 
   const navItems = [
+    ...(userData?.user?.subscribed ? [{ name: 'My Courses', href: '/my-courses' }] : []),
     { name: 'Home', href: '/' },
     { name: 'Categories', href: '/categories' },
     { name: 'Courses', href: '/courses' },
+    { name: 'My Courses', href: '/my-courses' },
     { name: 'Plans', href: '/plans' },
     { name: 'Blog', href: '/blog' },
     { name: 'About Us', href: '/about' },
@@ -61,19 +66,30 @@ const Header = () => {
     const data = { user, token };
     setUserData(data);
     localStorage.setItem('onegrab_user', JSON.stringify(data));
+
+    if (user.subscribed) {
+      navigate('/my-courses');
+    } else {
+      navigate('/plans');
+    }
   };
 
   const handleSignupSuccess = (user: User, token: string) => {
     const data = { user, token };
     setUserData(data);
     localStorage.setItem('onegrab_user', JSON.stringify(data));
+
+    if (user.subscribed) {
+      navigate('/my-courses');
+    } else {
+      navigate('/plans');
+    }
   };
 
   const handleLogout = async () => {
     if (!userData?.token) return;
 
     setLoadingLogout(true);
-
     const backendUrl = import.meta.env.VITE_API_BASE_URL;
 
     try {
@@ -82,12 +98,13 @@ const Header = () => {
         headers: { Authorization: `Bearer ${userData.token}` },
       });
     } catch {
-      // optionally handle error here
+      // Optionally handle error
     }
 
     setUserData(null);
     localStorage.removeItem('onegrab_user');
     setLoadingLogout(false);
+    navigate('/'); // Redirect to home after logout
   };
 
   return (
