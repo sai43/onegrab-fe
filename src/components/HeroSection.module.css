@@ -1,24 +1,37 @@
+/* Common shared properties for all background variants */
 .heroBg,
-.pricingBg {
+.pricingBg,
+.learningBg,
+.projectsBg,
+.advancedBg,
+#my-courses,
+#courses {
   position: relative;
   background-repeat: repeat;
   background-position: center center;
   background-size: cover;
-}
-
-.heroBg {
-  background-color: #E1CAFF;
   background-image: url('https://ik.imagekit.io/x5lc68m0o/BG_OG.jpg');
-  background-blend-mode: multiply;
-  min-height: 100vh;
 }
 
+/* Common ::before overlay for all */
 .heroBg::before,
-.pricingBg::before {
+.pricingBg::before,
+.learningBg::before,
+.projectsBg::before,
+.advancedBg::before,
+#my-courses::before,
+#courses::before {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+
+/* Specific background colors and overlays */
+.heroBg {
+  background-color: #E1CAFF;
+  background-blend-mode: multiply;
+  min-height: 100vh;
 }
 
 .heroBg::before {
@@ -26,11 +39,32 @@
   opacity: 0.1;
 }
 
-.pricingBg {
-  background-image: url('https://ik.imagekit.io/x5lc68m0o/BG_OG.jpg');
-}
-
 .pricingBg::before {
   background-color: #C2F1F3;
   opacity: 0.4;
+}
+
+.learningBg::before {
+  background-color: #FEE4E2; /* light pinkish/red overlay */
+  opacity: 0.3;
+}
+
+.projectsBg::before {
+  background-color: #D1FAE5; /* light green overlay */
+  opacity: 0.3;
+}
+
+.advancedBg::before {
+  background-color: #DBEAFE; /* light blue overlay */
+  opacity: 0.3;
+}
+
+#my-courses::before {
+  background-color: #FFF7D6; /* light yellow overlay */
+  opacity: 0.3;
+}
+
+#courses::before {
+  background-color: #F0F9FF; /* very light blue overlay */
+  opacity: 0.3;
 }
