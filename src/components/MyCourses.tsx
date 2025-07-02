@@ -8,6 +8,7 @@ const MyCourses = () => {
   const [courses, setCourses] = useState<any[]>([]);
   const [loadingCourseId, setLoadingCourseId] = useState<number | null>(null);
   const [globalLoading, setGlobalLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +20,8 @@ const MyCourses = () => {
     })
       .then(res => res.json())
       .then(data => setCourses(data.data || []))
-      .catch(() => toast.error("Failed to load courses"));
+      .catch(() => toast.error("Failed to load courses"))
+      .finally(() => setInitialLoading(false));
   }, []);
 
   const handleCourseClick = (slug: string, id: number) => {
@@ -29,6 +31,14 @@ const MyCourses = () => {
       navigate(`/my-courses/${slug}`);
     }, 500);
   };
+
+  if (initialLoading) {
+    return (
+      <div className="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
+        <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <section id="my-courses" className="py-20 bg-gray-50 min-h-screen relative">
