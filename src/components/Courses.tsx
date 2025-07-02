@@ -29,7 +29,6 @@ const Courses = () => {
 
   // Fetch courses
   const fetchCourses = useCallback(async () => {
-
     setLoading(true);
     setError(null);
 
@@ -47,17 +46,18 @@ const Courses = () => {
 
       const mapped = data.courses.data.map((courseObj: any) => {
         const attrs = courseObj.attributes;
+
         return {
-          id: attrs.id,
+          id: Number(courseObj.id), // FIX: Use top-level id
           title: attrs.title,
           description: attrs.description,
           instructor: attrs.author_name || 'Unknown',
-          rating: undefined,
-          reviewCount: undefined,
-          students: undefined,
+          rating: attrs.rating ?? undefined,
+          reviewCount: attrs.review_count ?? undefined,
+          students: attrs.students_count ?? undefined,
           duration: attrs.duration_minutes ? `${Math.floor(attrs.duration_minutes / 60)} hours` : undefined,
-          price: attrs.price || undefined,
-          originalPrice: undefined,
+          price: attrs.price ? `₹${attrs.price}` : undefined,
+          originalPrice: attrs.original_price ? `₹${attrs.original_price}` : undefined,
           level: attrs.level || undefined,
           image: attrs.thumbnail_url || undefined,
         } as Course;
