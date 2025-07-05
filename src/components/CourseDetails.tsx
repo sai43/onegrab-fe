@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import RichContent from './RichContent';
 
 const CourseDetails = () => {
   const { slug } = useParams();
@@ -54,7 +55,7 @@ const CourseDetails = () => {
 
     setSectionLoading((prev) => ({ ...prev, [sectionId]: true }));
 
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/my_courses/${slug}/sections/${sectionId}`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/my_courses/${slug}/sections/${sectionId}?nocache=${import.meta.env.VITE_SECTION_API_CACHE}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => res.json())
@@ -186,33 +187,10 @@ const CourseDetails = () => {
                           <div key={topic.id} className="bg-white rounded-md p-4 mb-4 shadow-sm border">
                             <h5 className="font-semibold text-gray-800 mb-2">{topic.attributes.title}</h5>
 
-                            <div className="prose max-w-none text-gray-700">
-                              {isHtml ? (
-                                <div dangerouslySetInnerHTML={{ __html: finalContent }} />
-                              ) : (
-                                <ReactMarkdown
-                                  components={{
-                                    code({ node, inline, className, children, ...props }) {
-                                      const match = /language-(\w+)/.exec(className || '');
-                                      return !inline && match ? (
-                                        <SyntaxHighlighter
-                                          style={oneDark}
-                                          language={match[1]}
-                                          PreTag="div"
-                                          {...props}
-                                        >
-                                          {String(children).replace(/\n$/, '')}
-                                        </SyntaxHighlighter>
-                                      ) : (
-                                        <code className={className} {...props}>{children}</code>
-                                      );
-                                    }
-                                  }}
-                                >
-                                  {finalContent}
-                                </ReactMarkdown>
-                              )}
-                            </div>
+                          <RichContent
+                            content={topic.attributes.content}
+                            notes={topic.attributes.notes}
+                          />
                           </div>
                         );
                       })}
