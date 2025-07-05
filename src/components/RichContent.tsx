@@ -108,7 +108,7 @@ const RichContent: React.FC<RichContentProps> = ({
       )}
 
       {/* Main content */}
-      <article className="prose prose-zinc lg:prose-lg dark:prose-invert max-w-none flex-1 animate-fadeIn">
+      <article className="prose prose-zinc lg:prose-lg dark:prose-invert max-w-none flex-1 animate-fadeIn prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md">
         <button
           onClick={() => setIsDarkCodeTheme(!isDarkCodeTheme)}
           className={`mb-4 px-3 py-1 text-sm rounded transition-all duration-300 ${
@@ -133,7 +133,7 @@ const RichContent: React.FC<RichContentProps> = ({
                     href={`#${slug}`}
                     className="opacity-0 group-hover:opacity-100 ml-2 text-gray-400"
                   >
-                    #
+                    🔗
                   </a>
                 </h2>
               );
@@ -148,7 +148,7 @@ const RichContent: React.FC<RichContentProps> = ({
                     href={`#${slug}`}
                     className="opacity-0 group-hover:opacity-100 ml-2 text-gray-400"
                   >
-                    #
+                    🔗
                   </a>
                 </h3>
               );
@@ -158,19 +158,24 @@ const RichContent: React.FC<RichContentProps> = ({
               const language = match ? match[1] : 'text';
               if (!inline && match) {
                 return (
-                  <SyntaxHighlighter
-                    style={isDarkCodeTheme ? oneDark : oneLight}
-                    language={language}
-                    PreTag="div"
-                    customStyle={{
-                      borderRadius: '0.5rem',
-                      padding: '1rem',
-                      background: isDarkCodeTheme ? '#282c34' : '#f5f5f5',
-                    }}
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
+                  <div className="relative mb-4 border-l-4 border-indigo-500 shadow-inner">
+                    <span className="absolute top-0 right-0 bg-gray-700 text-white text-xs px-2 py-0.5 rounded-bl">
+                      {language}
+                    </span>
+                    <SyntaxHighlighter
+                      style={isDarkCodeTheme ? oneDark : oneLight}
+                      language={language}
+                      PreTag="div"
+                      customStyle={{
+                        borderRadius: '0.5rem',
+                        padding: '1rem',
+                        background: isDarkCodeTheme ? '#282c34' : '#f5f5f5',
+                      }}
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  </div>
                 );
               }
               return (
@@ -202,13 +207,16 @@ const RichContent: React.FC<RichContentProps> = ({
             },
             img({ src, alt, ...props }) {
               return (
-                <img
-                  src={src || ''}
-                  alt={alt || 'Content image'}
-                  loading="lazy"
-                  className="rounded shadow-md my-4 mx-auto"
-                  {...props}
-                />
+                <figure>
+                  <img
+                    src={src || ''}
+                    alt={alt || 'Content image'}
+                    loading="lazy"
+                    className="rounded shadow-md my-4 mx-auto"
+                    {...props}
+                  />
+                  {alt && <figcaption className="text-center text-sm text-gray-500">{alt}</figcaption>}
+                </figure>
               );
             },
           }}
