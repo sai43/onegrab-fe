@@ -34,6 +34,7 @@ const RichContent: React.FC<RichContentProps> = ({
 
     const tree = unified().use(remarkParse).parse(markdownContent);
     const headings: Heading[] = [];
+    const slugCount: Record<string, number> = {};
 
     function walk(node: any) {
       if (node.type === 'heading' && node.depth <= 3) {
@@ -41,8 +42,16 @@ const RichContent: React.FC<RichContentProps> = ({
           .filter((child: any) => child.type === 'text' || child.type === 'inlineCode')
           .map((child: any) => child.value)
           .join('');
-        if (!text) return;
-        const slug = slugify(text, { lower: true, strict: true });
+        let slug = slugify(text, { lower: true, strict: true });
+
+        // Ensure uniqueness by adding suffix if repeated
+        if (slugCount[slug]) {
+          slugCount[slug] += 1;
+          slug += `-${slugCount[slug]}`;
+        } else {
+          slugCount[slug] = 1;
+        }
+
         headings.push({ text, slug, level: node.depth });
       }
       if (node.children) {
@@ -90,11 +99,11 @@ const RichContent: React.FC<RichContentProps> = ({
         <aside className="hidden lg:block lg:w-1/4">
           <nav className="sticky top-24 space-y-2 text-sm">
             <p className="font-bold mb-2">On this page</p>
-            {toc.map((heading) => (
+            {toc.map((heading, index) => (
               <a
-                key={heading.slug}
+                key={`${heading.slug}-${index}`}
                 href={`#${heading.slug}`}
-                className={`block pl-${heading.level === 3 ? 4 : 2} transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 truncate ${
+                className={`block pl-${heading.level === 3 ? 4 : 2} transition ${
                   activeSlug === heading.slug
                     ? 'text-blue-600 font-semibold'
                     : 'text-gray-600 hover:text-blue-500'
@@ -108,14 +117,10 @@ const RichContent: React.FC<RichContentProps> = ({
       )}
 
       {/* Main content */}
-      <article className="prose prose-zinc lg:prose-lg dark:prose-invert max-w-none flex-1 animate-fadeIn prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md">
+      <article className="prose prose-zinc lg:prose-lg dark:prose-invert max-w-none flex-1">
         <button
           onClick={() => setIsDarkCodeTheme(!isDarkCodeTheme)}
-          className={`mb-4 px-3 py-1 text-sm rounded transition-all duration-300 ${
-            isDarkCodeTheme
-              ? 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
-              : 'bg-blue-200 dark:bg-blue-700 hover:bg-blue-300 dark:hover:bg-blue-600'
-          }`}
+          className="mb-4 px-3 py-1 text-sm rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
         >
           Toggle Code Theme: {isDarkCodeTheme ? 'Dark' : 'Light'}
         </button>
@@ -125,57 +130,59 @@ const RichContent: React.FC<RichContentProps> = ({
           components={{
             h2({ node, children, ...props }) {
               const text = String(children);
-              const slug = slugify(text, { lower: true, strict: true });
+              let slug = slugify(text, { lower: true, strict: true });
+
+              // Ensure unique slug using node position
+              const position = node?.position?.start?.line || Math.random();
+              slug += `-${position}`;
+
               return (
-                <h2 id={slug} {...props} className="group scroll-mt-32">
+                <h2 id={slug} {...props} className="group scroll-mt-20">
                   {children}
                   <a
                     href={`#${slug}`}
                     className="opacity-0 group-hover:opacity-100 ml-2 text-gray-400"
                   >
-                    🔗
+                    #
                   </a>
                 </h2>
               );
             },
             h3({ node, children, ...props }) {
               const text = String(children);
-              const slug = slugify(text, { lower: true, strict: true });
+              let slug = slugify(text, { lower: true, strict: true });
+
+              const position = node?.position?.start?.line || Math.random();
+              slug += `-${position}`;
+
               return (
-                <h3 id={slug} {...props} className="group scroll-mt-32">
+                <h3 id={slug} {...props} className="group scroll-mt-20">
                   {children}
                   <a
                     href={`#${slug}`}
                     className="opacity-0 group-hover:opacity-100 ml-2 text-gray-400"
                   >
-                    🔗
+                    #
                   </a>
                 </h3>
               );
             },
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '');
-              const language = match ? match[1] : 'text';
               if (!inline && match) {
                 return (
-                  <div className="relative mb-4 border-l-4 border-indigo-500 shadow-inner">
-                    <span className="absolute top-0 right-0 bg-gray-700 text-white text-xs px-2 py-0.5 rounded-bl">
-                      {language}
-                    </span>
-                    <SyntaxHighlighter
-                      style={isDarkCodeTheme ? oneDark : oneLight}
-                      language={language}
-                      PreTag="div"
-                      customStyle={{
-                        borderRadius: '0.5rem',
-                        padding: '1rem',
-                        background: isDarkCodeTheme ? '#282c34' : '#f5f5f5',
-                      }}
-                      {...props}
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  </div>
+                  <SyntaxHighlighter
+                    style={isDarkCodeTheme ? oneDark : oneLight}
+                    language={match[1]}
+                    PreTag="div"
+                    customStyle={{
+                      borderRadius: '0.5rem',
+                      padding: '1rem',
+                    }}
+                    {...props}
+                  >
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
                 );
               }
               return (
@@ -207,16 +214,13 @@ const RichContent: React.FC<RichContentProps> = ({
             },
             img({ src, alt, ...props }) {
               return (
-                <figure>
-                  <img
-                    src={src || ''}
-                    alt={alt || 'Content image'}
-                    loading="lazy"
-                    className="rounded shadow-md my-4 mx-auto"
-                    {...props}
-                  />
-                  {alt && <figcaption className="text-center text-sm text-gray-500">{alt}</figcaption>}
-                </figure>
+                <img
+                  src={src || ''}
+                  alt={alt || ''}
+                  loading="lazy"
+                  className="rounded shadow-md my-4 mx-auto"
+                  {...props}
+                />
               );
             },
           }}
